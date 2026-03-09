@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Algo está por pasar...</title>
+<style>
+:root {
+  --bg-a: #ffd4e5;
+  --bg-b: #ffe8c9;
+  --bg-c: #f6d7ff;
+  --ink: #2f2131;
+  --soft-ink: #5d4563;
+  --accent: #ff4f8b;
+  --accent-2: #ff7aa7;
+  --card: rgba(255, 255, 255, 0.72);
+  --line: rgba(255, 79, 139, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(-45deg, var(--bg-a), var(--bg-b), var(--bg-c), #ffdbe0);
+  background-size: 320% 320%;
+  animation: sky 15s ease infinite;
+  overflow: hidden;
+}
+
+@keyframes sky {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+#fx {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.float {
+  position: absolute;
+  bottom: -30px;
+  opacity: 0.82;
+  animation: rise linear forwards;
+  filter: drop-shadow(0 8px 8px rgba(0,0,0,.08));
+}
+
+@keyframes rise {
+  from { transform: translateY(0) rotate(0deg); opacity: 0.82; }
+  to { transform: translateY(-118vh) rotate(26deg); opacity: 0; }
+}
+
+.container {
+  width: min(94vw, 700px);
+  border-radius: 28px;
+  padding: 36px 28px;
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.65);
+  box-shadow: 0 24px 70px rgba(105, 36, 76, 0.25);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  background: linear-gradient(120deg, rgba(255,255,255,.7), rgba(255,147,188,.28), rgba(255,255,255,.7));
+  z-index: -1;
+}
+
+h1, h2 {
+  margin: 0 0 10px;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: clamp(1.65rem, 4vw, 2.55rem);
+}
+
+p {
+  margin: 10px 0;
+  line-height: 1.62;
+  color: var(--soft-ink);
+  font-size: 1.05rem;
+}
+
+.hidden { display: none; }
+.section { animation: fadeUp .55s ease both; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+input {
+  width: min(340px, 92%);
+  margin-top: 12px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1px solid #f0bfd2;
+  font-size: 1rem;
+  outline: none;
+  transition: .2s border, .2s box-shadow;
+}
+
+input:focus {
+  border-color: #ff7baa;
+  box-shadow: 0 0 0 4px rgba(255, 124, 170, .2);
+}
+
+button {
+  margin-top: 16px;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 12px 24px rgba(255, 79, 139, .3);
+  transition: .2s transform, .2s filter;
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.05);
+}
+
+#error {
+  min-height: 24px;
+  font-weight: 700;
+  color: #c73767;
+}
+
+.hint {
+  font-size: .92rem;
+  opacity: .84;
+}
+
+.reveal-card {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255, 243, 248, .95));
+  border: 1px solid var(--line);
+  animation: pop .65s ease both;
+}
+
+@keyframes pop {
+  0% { opacity: 0; transform: scale(.96); }
+  60% { transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.date {
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-shadow: 0 10px 24px rgba(255,79,139,.3);
+  margin: 6px 0 10px;
+}
+
+.final-title {
+  font-size: clamp(1.65rem, 4vw, 2.45rem);
+}
+
+@media (max-width: 640px) {
+  .container { padding: 28px 18px; }
+  p { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+  <div id="fx" aria-hidden="true"></div>
+
+  <main class="container">
+    <section id="login" class="section">
+      <h2>🔐 Acceso secreto</h2>
+      <p>Si llegaste hasta aquí... es porque resolviste todas las pistas.</p>
+      <p>Introduce el código final:</p>
+      <input id="password" type="text" autocomplete="off" />
+      <br />
+      <button onclick="checkPassword()">Descubrir</button>
+      <p id="error"></p>
+      <p class="hint">Pista: los finales hermosos siempre tienen una llave.</p>
+    </section>
+
+    <section id="mensaje1" class="hidden section">
+      <h2>🕵️‍♀️ ¡Detective nivel experto!</h2>
+      <p>Tengo que admitir algo... no pensé que llegarías hasta aquí tan rápido.</p>
+      <p>Pero supongo que cuando algo es importante, vale la pena descifrarlo.</p>
+      <button onclick="mostrarFinal()">Continuar</button>
+    </section>
+
+    <section id="final" class="hidden section">
+      <h2 class="final-title">Hay un momento que quiero vivir contigo...</h2>
+      <p>Una pequeña cita con el destino.</p>
+
+      <button id="revealBtn" onclick="revelarFecha()">Revelar fecha secreta</button>
+
+      <div id="fechaWrap" class="reveal-card hidden">
+        <div class="date">24 de Abril</div>
+        <p>
+          Ese día quiero verte, reír contigo,
+          y convertir un instante bonito
+          en uno imposible de olvidar.
+        </p>
+        <p>
+          No traigas nada. Solo ven siendo tú.
+          Con eso, ya tengo todo lo que quiero.
+        </p>
+      </div>
+    </section>
+  </main>
+
+<script>
+function checkPassword(){
+  const password = "1234"; // CAMBIAR CÓDIGO AQUÍ
+  const input = document.getElementById("password").value;
+
+  if(input === password){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("mensaje1").style.display = "block";
+    document.getElementById("error").innerText = "";
+    burst(12);
+  } else {
+    document.getElementById("error").innerText = "Código incorrecto detective 🤨";
+  }
+}
+
+function mostrarFinal(){
+  document.getElementById("mensaje1").style.display = "none";
+  document.getElementById("final").style.display = "block";
+  burst(10);
+}
+
+function revelarFecha(){
+  document.getElementById("revealBtn").style.display = "none";
+  document.getElementById("fechaWrap").style.display = "block";
+  burst(24);
+}
+
+function spawnFloat(){
+  const fx = document.getElementById("fx");
+  const symbols = ["❤️","💖","✨","💘","💕"];
+  const item = document.createElement("span");
+  item.className = "float";
+  item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+  item.style.left = (Math.random() * 100) + "vw";
+  item.style.fontSize = (14 + Math.random() * 18) + "px";
+  item.style.animationDuration = (3.4 + Math.random() * 2.8) + "s";
+  fx.appendChild(item);
+  setTimeout(() => item.remove(), 6500);
+}
+
+function burst(amount){
+  for(let i = 0; i < amount; i++){
+    setTimeout(spawnFloat, i * 90);
+  }
+}
+
+setInterval(spawnFloat, 700);
+</script>
+</body>
+</html>
