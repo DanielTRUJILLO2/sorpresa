@@ -179,6 +179,37 @@ button:hover {
   font-size: clamp(1.65rem, 4vw, 2.45rem);
 }
 
+.location-teaser {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px dashed rgba(255, 79, 139, 0.35);
+}
+
+.location-label {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7a3a56;
+}
+
+.location-code {
+  margin: 0;
+  font-size: 1.06rem;
+  letter-spacing: 1.2px;
+  color: #5f3d58;
+  filter: blur(2.4px);
+  user-select: none;
+  text-shadow: 0 0 10px rgba(255, 79, 139, 0.2);
+}
+
+.location-note {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  opacity: 0.78;
+}
+
 @media (max-width: 640px) {
   .container { padding: 28px 18px; }
   p { font-size: 1rem; }
@@ -224,6 +255,11 @@ button:hover {
           No traigas nada. Solo ven siendo tú.
           Con eso, ya tengo todo lo que quiero.
         </p>
+        <div class="location-teaser">
+          <p class="location-label">Ubicación:</p>
+          <p class="location-code">M1r4d0r d3l C13l0 · m3s4 c3rc4n4 4 l4 v3nt4n4</p>
+          <p class="location-note">Te doy una pista real cuando llegue el momento 💌</p>
+        </div>
       </div>
     </section>
   </main>
